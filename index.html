@@ -126,12 +126,69 @@
             font-size: 0.9rem;
             color: #31708f;
         }
+        .card {
+            margin-top: 20px;
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
             }
             .logo {
                 font-size: 2.2rem;
+            }
+            .title {
+                font-size: 1.6rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .search-input {
+                font-size: 1.1rem;
+                padding: 14px 18px;
+            }
+            .search-btn {
+                font-size: 1rem;
+                padding: 14px 35px;
+            }
+            .result {
+                font-size: 1.2rem;
+                padding: 25px;
+            }
+            .instructions {
+                font-size: 0.85rem;
+                padding: 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+                max-width: 95%;
+            }
+            .logo {
+                font-size: 1.8rem;
+            }
+            .title {
+                font-size: 1.4rem;
+            }
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            .search-input {
+                font-size: 1rem;
+                padding: 12px 15px;
+            }
+            .search-btn {
+                font-size: 0.95rem;
+                padding: 12px 30px;
+            }
+            .result {
+                font-size: 1.1rem;
+                padding: 20px;
+                min-height: 80px;
+            }
+            .instructions {
+                font-size: 0.8rem;
+                padding: 12px;
             }
         }
     </style>
@@ -144,6 +201,11 @@
             <div class="subtitle">Tahun Ajaran 2025/2026</div>
         </div>
         
+        <div class="container">
+        <div id="lock" class="card lock"></div>
+
+        <div id="app" style="display:none">
+        <div class="card">
         <form class="search-form" id="searchForm">
             <input type="text" class="search-input" id="nisnInput" placeholder="Masukkan NISN Anda (contoh: 0123456789)" maxlength="10" autocomplete="off">
             <br>
@@ -158,6 +220,20 @@
     </div>
 
     <script>
+        // Batas waktu pembukaan pencarian NISN
+        const OPEN_TIME = new Date("2026-05-05T10:00:00");
+        const NOW = new Date(); // Ubah sesuai kebutuhan
+
+        const lockDiv = document.getElementById('lock');
+        const appDiv = document.getElementById('app');
+
+        if(NOW < OPEN_TIME){
+        lockDiv.innerHTML = `<h2>Pengumuman Belum Dibuka</h2><p>Akan dibuka pada:<br>${OPEN_TIME}</p>`;
+        }else{
+        lockDiv.style.display='none';
+        appDiv.style.display='block';
+        }
+
         // Data siswa contoh (di dunia nyata, load dari JSON/CSV/database)
         const siswaData = [
             { nisn: '0081335737', nama: 'ADINDA PUTRI PRATIWI', status: 'LULUS' },
